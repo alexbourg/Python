@@ -82,7 +82,7 @@ py C:\Program64\Python\Packages\install_packages.py
 ```
 </br>
 
-### Run jupyter notebook
+### To run jupyter notebook
 ```
 jupyter notebook
 ```
