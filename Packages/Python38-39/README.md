@@ -63,7 +63,7 @@ xlwings
 
 ## Default installation:
 Edit install.bat
-py .\Packages\install_packages.py [requirement file.txt] [path]
+py .\Packages\install_packages.py [requirement file.txt] [path] <br>
 e.g. py .\Packages\install_packages.py D:\req.txt D:\Packages
 
 </br>
