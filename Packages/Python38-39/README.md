@@ -1,7 +1,7 @@
 # Python offline packages
 This script is used to install packages offline
 
-## Note: couldn't add the tensorflow wheels due to big file size, download it from these links and add it to the Packages folder
+### Note: couldn't add the tensorflow wheels due to big file size, download it from these links and add it to the Packages folder
 https://files.pythonhosted.org/packages/8e/89/3e3b9f29a8e0358d341a6d1eb2df6d3a04e5cac51324c0774f37d6a48d78/tensorflow-2.5.0rc1-cp39-cp39-win_amd64.whl
 https://files.pythonhosted.org/packages/ad/fc/fccaa149d7ccc165de01d62d19e5e9492e87ad23a7106f6dfe132800ca6f/tensorflow-2.4.1-cp38-cp38-win_amd64.whl
 
