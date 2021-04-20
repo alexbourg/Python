@@ -59,6 +59,16 @@ xlrd
 XlsxWriter
 xlwings
 
+<br>
+
+## Installation:
+Edit install.bat
+py .\Packages\install_packages.py [requirement file.txt] [path]
+e.g. py .\Packages\install_packages.py D:\req.txt D:\Packages
+
+</br>
+
+<br>
 
 ### Create new environment
 ```
@@ -70,6 +80,7 @@ Download the Packages folder to C:\Program64\Python\Packages then run the follow
 ```
 py C:\Program64\Python\Packages\install_packages.py
 ```
+</br>
 
 ### Run jupyter notebook
 ```
