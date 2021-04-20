@@ -61,7 +61,7 @@ xlwings
 
 <br>
 
-## Installation:
+## Default installation:
 Edit install.bat
 py .\Packages\install_packages.py [requirement file.txt] [path]
 e.g. py .\Packages\install_packages.py D:\req.txt D:\Packages
@@ -70,7 +70,7 @@ e.g. py .\Packages\install_packages.py D:\req.txt D:\Packages
 
 <br>
 
-### Create new environment
+### To create a new environment
 ```
 python -m venv C:\Program64\Python\venv\Project1
 ```
