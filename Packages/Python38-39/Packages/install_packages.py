@@ -12,7 +12,7 @@ def install(package, path):
     if "pip" in package:
         os.system(f"python -m pip install --upgrade pip --no-index --find-links {path}")
     elif "numpy==1.19.2" in package and sys.version_info.minor == 9:
-        os.system(f"echo Package is not compatible with current Python version")
+        os.system(f"echo {package} is not compatible with current Python version")
     else:
         os.system(f"pip install --no-index --find-links {path} {package}")
 
