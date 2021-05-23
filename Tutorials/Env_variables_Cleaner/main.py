@@ -13,7 +13,7 @@ import time
 import os
 
 
-enable_kill_python = True
+enable_kill_python = False
 enable_clean_old_dir = True
 enable_clean_all_env = True
 enable_clean_path_env = True
@@ -37,7 +37,7 @@ def clean_old_dir():
         print("*************************************************")
         print("Stage 1: cleaning old python directories")
         print("*************************************************")
-        powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python"')
+        powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python1"')
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python39"')
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python38"')
     except:
