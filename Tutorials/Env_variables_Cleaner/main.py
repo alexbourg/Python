@@ -1,4 +1,4 @@
-Python_Env_Var_cleaner_version = "0.0.11"
+Python_Env_Var_cleaner_version = "0.0.1"
 __author__ = "Alex BOURG"
 __copyright__ = "Copyright 2021"
 __license__ = "GPL"
@@ -7,17 +7,9 @@ __email__ = "alex.bourg@outlook.com"
 __status__ = "Production"
 
 
-# import tkinter as tk
 import subprocess
 import time
-import os
-
-
-enable_kill_python = False
-enable_clean_old_dir = True
-enable_clean_all_env = True
-enable_clean_path_env = True
-enable_clean_path_ext = True
+import os, sys
 
 
 def powershell(cmd):
@@ -35,11 +27,15 @@ def clean_old_dir():
 
     try:
         print("*************************************************")
-        print("Stage 1: cleaning old python directories")
+        print("Action: cleaning old python directories")
         print("*************************************************")
-        powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python1"')
+        powershell('Remove - Item - Force $ENV: UserProfile\AppData\Local\Microsoft\WindowsApps\python.exe')
+        powershell('Remove - Item - Force $ENV: UserProfile\AppData\Local\Microsoft\WindowsApps\python3.exe')
+        powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python"')
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python39"')
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python38"')
+
+
     except:
         pass
 
@@ -47,7 +43,7 @@ def clean_old_dir():
 def clean_all_env():
     print()
     print("*************************************************")
-    print("Stage 2: cleaning all environment items")
+    print("Action: cleaning all environment items")
     print("*************************************************")
     print()
     whitelist = ["PYTHONIOENCODING", "PYTHONUNBUFFERED", "PYTHONPATH"]
@@ -73,13 +69,12 @@ def clean_all_env():
 def clean_path_env():
     print()
     print("*************************************************")
-    print('Stage 3: cleaning "PATH" environment items')
+    print('Action: cleaning "PATH" environment items')
     print("*************************************************")
     print()
     profiles = ['"User"', '"Machine"']
     blacklist = ["python", "anaconda", "poppler"]
     for profile in profiles:
-        print()
         new_env = []
         old_env = powershell(
             f'[Environment]::GetEnvironmentVariable("PATH", {profile})'
@@ -88,6 +83,7 @@ def clean_path_env():
         old_env = old_env.stdout.decode("utf-8")
 
         if len(old_env) > 0:
+            print()
             old_env = old_env.replace("\n", "")
             old_env = old_env.replace("\r", "")
             old_env = old_env.replace(";;", ";")
@@ -116,7 +112,7 @@ def clean_path_env():
 def clean_path_ext():
     print()
     print("*************************************************")
-    print('Stage 4: cleaning "PATHEXT"')
+    print('Action: cleaning "PATHEXT"')
     print("*************************************************")
     profiles = ['"User"', '"Machine"']
     blacklist = [".PY"]
@@ -153,14 +149,39 @@ def clean_path_ext():
 
 
 if __name__ == "__main__":
-    # root = tk.Tk()
-    # root.overrideredirect(1)
-    # root.withdraw()
+    options = sys.argv
+    for i in range(len(options)):
+        options[i] = options[i].lower()
     print("*************************************************")
     print("Python installation is starting ... please wait!")
     print("*************************************************")
     print()
     time.sleep(4)
+
+    if 'kill_python' in options or '/kill_python' in options or '-kill_python' in options:
+        enable_kill_python = True
+    else:
+        enable_kill_python = False
+
+    if 'clean_old_dir' in options or '-clean_old_dir' in options or '/clean_old_dir' in options:
+        enable_clean_old_dir = True
+    else:
+        enable_clean_old_dir = False
+
+    if 'clean_all_env' in options or '-clean_all_env' in options or '/clean_all_env' in options:
+        enable_clean_all_env = True
+    else:
+        enable_clean_all_env = False
+
+    if 'clean_path_env' in options or '-clean_path_env' in options or '/clean_path_env' in options:
+        enable_clean_path_env = True
+    else:
+        enable_clean_path_env = False
+
+    if 'clean_path_ext' in options or '-clean_path_ext' in options or '/clean_path_ext' in options:
+        enable_clean_path_ext = True
+    else:
+        enable_clean_path_ext = False
 
     if enable_clean_old_dir:
         try:
