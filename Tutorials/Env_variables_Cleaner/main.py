@@ -13,17 +13,25 @@ import time
 import os
 
 
+enable_kill_python = True
+enable_clean_old_dir = True
+enable_clean_all_env = True
+enable_clean_path_env = True
+enable_clean_path_ext = True
+
+
 def powershell(cmd):
     completed = subprocess.run(["powershell", "-Command", cmd], capture_output=True)
     return completed
 
 
 def clean_old_dir():
-    try:
-        powershell('Stop-Process -Name "python" -Force')
-        powershell('Stop-Process -Name "pythonw" -Force')
-    except:
-        pass
+    if enable_kill_python:
+        try:
+            powershell('Stop-Process -Name "python" -Force')
+            powershell('Stop-Process -Name "pythonw" -Force')
+        except:
+            pass
 
     try:
         print("*************************************************")
@@ -153,22 +161,27 @@ if __name__ == "__main__":
     print("*************************************************")
     print()
     time.sleep(4)
-    try:
-        clean_old_dir()
-    except:
-        pass
 
-    try:
-        clean_all_env()
-    except:
-        pass
+    if enable_clean_old_dir:
+        try:
+            clean_old_dir()
+        except:
+            pass
 
-    try:
-        clean_path_env()
-    except:
-        pass
+    if enable_clean_all_env:
+        try:
+            clean_all_env()
+        except:
+            pass
 
-    try:
-        clean_path_ext()
-    except:
-        pass
+    if enable_clean_path_env:
+        try:
+            clean_path_env()
+        except:
+            pass
+
+    if enable_clean_path_ext:
+        try:
+            clean_path_ext()
+        except:
+            pass
