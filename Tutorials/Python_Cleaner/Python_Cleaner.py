@@ -103,7 +103,7 @@ def clean_path_env():
                     new_env.append(env)
 
             new_env = set(new_env)
-            new_env = f"'{';'.join(new_env)}'"
+            new_env = ';'.join(new_env)
             powershell(
                 f'[System.Environment]::SetEnvironmentVariable("Path", "{new_env}",[System.EnvironmentVariableTarget]::{profile})'
             )
@@ -142,7 +142,7 @@ def clean_path_ext():
                     new_env.append(env)
 
             new_env = set(new_env)
-            new_env = f"'{';'.join(new_env)}'"
+            new_env = ';'.join(new_env)
             powershell(
                 f'[System.Environment]::SetEnvironmentVariable("PathEXT", "{new_env}",[System.EnvironmentVariableTarget]::{profile})'
             )
