@@ -3,7 +3,6 @@ import os
 from pathlib import Path
 import time
 import subprocess
-
 Python_Installer_version = "0.0.1"
 __author__ = "Alex BOURG"
 __copyright__ = "Copyright 2021"
@@ -25,6 +24,7 @@ def clean_old_dir():
         powershell('Stop-Process -Name "pythonw" -Force')
     except:
         pass
+
 
     print("***************************************************************")
     print("Status: cleaning old python directories")
@@ -51,9 +51,9 @@ def clean_all_env():
     whitelist = ["PYTHONIOENCODING", "PYTHONUNBUFFERED", "PYTHONPATH"]
     for item, value in os.environ.items():
         if (
-                "python" in item.lower()
-                or "anaconda" in item.lower()
-                or "poppler" in item.lower()
+            "python" in item.lower()
+            or "anaconda" in item.lower()
+            or "poppler" in item.lower()
         ):
             if item not in whitelist:
                 print()
@@ -85,6 +85,7 @@ def clean_path_env():
         old_env = old_env.stdout.decode("utf-8")
 
         if len(old_env) > 0:
+            print()
             old_env = old_env.replace("\n", "")
             old_env = old_env.replace("\r", "")
             old_env = old_env.replace(";;", ";")
@@ -105,29 +106,18 @@ def clean_path_env():
 
             new_env = set(new_env)
             new_env = f"'{';'.join(new_env)}'"
+            powershell(
+                f'[System.Environment]::SetEnvironmentVariable("Path", {new_env},[System.EnvironmentVariableTarget]::{profile})')
 
             if profile == '"Machine"':
-                print()
-                print()
-                print("***************************************************************")
-                print('Status: adding new "PATH"')
-                print("***************************************************************")
-                new_env_python = r'C:\Program64\Python\Python;C:\Program64\Python\Python\Scripts;C:\Program64\Python' \
-                                 r'\Python\Library\bin' \
-                                 r';C:\Program64\Python\Python\Library\usr;C:\Program64\Python\Python\Library\Poppler' \
-                                 r'\bin;C:\Program64' \
-                                 r'\Python\Python\Library\mingw-w64\bin;' + new_env
-                powershell(
-                    f'[System.Environment]::SetEnvironmentVariable("Path", {new_env_python},[System.EnvironmentVariableTarget]::{profile})')
-            else:
-                powershell(
-                    f'[System.Environment]::SetEnvironmentVariable("Path", {new_env},[System.EnvironmentVariableTarget]::{profile})')
+                powershell(f'[System.Environment]::SetEnvironmentVariable("Path", {new_env},[System.EnvironmentVariableTarget]::{profile})')
+
 
 
 def clean_path_ext():
     print()
     print("***************************************************************")
-    print('Status: cleaning "PATHEXT" environment items')
+    print('Status: cleaning "PATHEXT"')
     print("***************************************************************")
     profiles = ['"User"', '"Machine"']
     blacklist = [".PY"]
@@ -158,19 +148,9 @@ def clean_path_ext():
 
             new_env = set(new_env)
             new_env = f"'{';'.join(new_env)}'"
-
-            if profile == '"Machine"':
-                print()
-                print()
-                print("***************************************************************")
-                print('Status: adding new "PATHEXT"')
-                print("***************************************************************")
-                new_env_python = new_env + ';.PY'
-                powershell(
-                    f'[System.Environment]::SetEnvironmentVariable("PathEXT", {new_env_python},[System.EnvironmentVariableTarget]::{profile})')
-            else:
-                powershell(
-                    f'[System.Environment]::SetEnvironmentVariable("PathEXT", {new_env},[System.EnvironmentVariableTarget]::{profile})')
+            powershell(
+                f'[System.Environment]::SetEnvironmentVariable("PathEXT", {new_env},[System.EnvironmentVariableTarget]::{profile})'
+            )
 
 
 def add_env():
@@ -194,7 +174,6 @@ def add_env():
 
         if old_env[-1] == ";":
             old_env = old_env[:-1]
-
     old_env = r'C:\Program64\Python\Python;C:\Program64\Python\Python\Scripts;C:\Program64\Python\Python\Library\bin' \
               r';C:\Program64\Python\Python\Library\usr;C:\Program64\Python\Python\Library\Poppler\bin;C:\Program64' \
               r'\Python\Python\Library\mingw-w64\bin;' + old_env
@@ -271,7 +250,7 @@ def version_changer(ver):
             clean_all_env()
             clean_path_env()
             clean_path_ext()
-            # add_env()
+            add_env()
             print()
             print("***************************************************************")
             print('Environment variables reset completed!')
@@ -329,7 +308,7 @@ def ask_version(par=None):
             clean_all_env()
             clean_path_env()
             clean_path_ext()
-            # add_env()
+            add_env()
             print()
             print('****************************************')
             print('Environment variables reset completed!')
@@ -357,7 +336,7 @@ if __name__ == "__main__":
             clean_all_env()
             clean_path_env()
             clean_path_ext()
-            # add_env()
+            add_env()
             print()
             print('****************************************')
             print('Environment variables reset completed!')
