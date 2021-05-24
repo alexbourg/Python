@@ -1,0 +1,1 @@
+/kill_python /clean_old_dir /clean_all_env /clean_path_env /clean_path_ext
