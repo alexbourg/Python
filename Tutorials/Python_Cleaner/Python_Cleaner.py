@@ -18,27 +18,24 @@ def powershell(cmd):
 
 
 def clean_old_dir():
-    if enable_kill_python:
-        try:
-            powershell('Stop-Process -Name "python" -Force')
-            powershell('Stop-Process -Name "pythonw" -Force')
-        except:
-            pass
-
     try:
-        print("*************************************************")
-        print("Action: cleaning old python directories")
-        print("*************************************************")
-        os.remove(
-            fr"{os.environ['USERPROFILE']}\AppData\Local\Microsoft\WindowsApps\python.exe"
-        )
-        os.remove(
-            fr"{os.environ['USERPROFILE']}\AppData\Local\Microsoft\WindowsApps\python3.exe"
-        )
+        powershell('Stop-Process -Name "python" -Force')
+        powershell('Stop-Process -Name "pythonw" -Force')
+    except:
+        pass
+
+    print("***************************************************************")
+    print("Status: cleaning old python directories")
+    print("***************************************************************")
+    try:
+        os.remove(fr"{os.environ['USERPROFILE']}\AppData\Local\Microsoft\WindowsApps\python.exe")
+        os.remove(fr"{os.environ['USERPROFILE']}\AppData\Local\Microsoft\WindowsApps\python3.exe")
+    except:
+        pass
+    try:
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python"')
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python39"')
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python38"')
-
     except:
         pass
 

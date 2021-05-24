@@ -25,74 +25,21 @@ def clean_old_dir():
     except:
         pass
 
+
+    print("***************************************************************")
+    print("Status: cleaning old python directories")
+    print("***************************************************************")
     try:
-        print("***************************************************************")
-        print("Status: cleaning old python directories")
-        print("***************************************************************")
-        os.remove(
-            fr"{os.environ['USERPROFILE']}\AppData\Local\Microsoft\WindowsApps\python.exe")
-        os.remove(
-            fr"{os.environ['USERPROFILE']}\AppData\Local\Microsoft\WindowsApps\python3.exe")
+        os.remove(fr"{os.environ['USERPROFILE']}\AppData\Local\Microsoft\WindowsApps\python.exe")
+        os.remove(fr"{os.environ['USERPROFILE']}\AppData\Local\Microsoft\WindowsApps\python3.exe")
+    except:
+        pass
+    try:
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python"')
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python\Python39"')
         powershell('Remove-Item -Recurse -Force "C:\Program64\Python38"')
     except:
         pass
-
-
-def version_changer(ver):
-    clean_old_dir()
-    print()
-    print("***************************************************************")
-    print(f"Status: installing Python{ver}")
-    print("***************************************************************")
-
-    library = r"C:\Program64\Python\DONT_DELETE\Python_Library.7z"
-    pythonpath = r"C:\Program64\Python"
-
-    if ver == '37':
-        new_python = r"C:\Program64\Python\DONT_DELETE\Python37.10.7z"
-    elif ver == '38':
-        new_python = r"C:\Program64\Python\DONT_DELETE\Python38.8.7z"
-    elif ver == '39':
-        new_python = r"C:\Program64\Python\DONT_DELETE\Python39.4.7z"
-
-    try:
-        powershell(
-            f'Get-ChildItem "{new_python}" | % {{ & "C:\\Program Files\\7-Zip\\7z.exe" "x" "-aos" $_.fullname "-o{pythonpath}" }}')
-        print()
-        print("***************************************************************")
-        print(f"Status: installing extra libraries")
-        print("***************************************************************")
-        powershell(
-            f'Get-ChildItem "{library}" | % {{ & "C:\\Program Files\\7-Zip\\7z.exe" "x" "-aos" $_.fullname "-o{pythonpath}" }}')
-        print()
-    except:
-        pass
-
-    python_check = Path(fr'C:\Program64\Python\Python\python{ver}.dll')
-    if python_check.is_file():
-        print(
-            "*****************************************************************************")
-        print('Installation completed successfully!')
-        print(
-            "*****************************************************************************")
-        print()
-        x = input(
-            'Do you want to reset the environement variabels? (Yes/No): ').lower()
-        if x.startswith("y"):
-            clean_all_env()
-            clean_path_env()
-            clean_path_ext()
-            add_env()
-            print()
-            print("***************************************************************")
-            print('Environment variables reset completed!')
-        print("***************************************************************")
-    else:
-        print("*********************************************************************************************")
-        print('Installation failed... please close all running process and try again.')
-        print("*********************************************************************************************")
 
 
 def clean_all_env():
@@ -254,13 +201,68 @@ def add_env():
     )
 
 
+def version_changer(ver):
+    clean_old_dir()
+    print()
+    print("***************************************************************")
+    print(f"Status: installing Python{ver}")
+    print("***************************************************************")
+
+    library = r"C:\Program64\Python\DONT_DELETE\Python_Library.7z"
+    pythonpath = r"C:\Program64\Python"
+
+    if ver == '37':
+        new_python = r"C:\Program64\Python\DONT_DELETE\Python37.10.7z"
+    elif ver == '38':
+        new_python = r"C:\Program64\Python\DONT_DELETE\Python38.8.7z"
+    elif ver == '39':
+        new_python = r"C:\Program64\Python\DONT_DELETE\Python39.4.7z"
+
+    try:
+        powershell(
+            f'Get-ChildItem "{new_python}" | % {{ & "C:\\Program Files\\7-Zip\\7z.exe" "x" "-aos" $_.fullname "-o{pythonpath}" }}')
+        print()
+        print("***************************************************************")
+        print(f"Status: installing extra libraries")
+        print("***************************************************************")
+        powershell(
+            f'Get-ChildItem "{library}" | % {{ & "C:\\Program Files\\7-Zip\\7z.exe" "x" "-aos" $_.fullname "-o{pythonpath}" }}')
+        print()
+    except:
+        pass
+
+    python_check = Path(fr'C:\Program64\Python\Python\python{ver}.dll')
+    if python_check.is_file():
+        print(
+            "*****************************************************************************")
+        print('Installation completed successfully!')
+        print(
+            "*****************************************************************************")
+        print()
+        x = input(
+            'Do you want to reset the environment variables? (Yes/No): ').lower()
+        if x.startswith("y"):
+            clean_all_env()
+            clean_path_env()
+            clean_path_ext()
+            add_env()
+            print()
+            print("***************************************************************")
+            print('Environment variables reset completed!')
+        print("***************************************************************")
+    else:
+        print("*********************************************************************************************")
+        print('Installation failed... please close all running process and try again.')
+        print("*********************************************************************************************")
+
+
 def ask_version(par=None):
     global action
     src = r'C:\Program64\Python\DONT_DELETE'
     if not os.path.isdir(src):
         print()
         print("************************************************************************************")
-        print(f'Error: "{src}" is not found')
+        print(f'Error: "{src}" is not found, re-installation is required!')
         print("************************************************************************************")
         print()
         return
@@ -274,7 +276,7 @@ def ask_version(par=None):
     elif Path(r'C:\Program64\Python\Python\python39.dll').is_file():
         current_version = 39
     else:
-        current_version = 0
+        current_version = "not found"
 
     print(f'Current Python version: {current_version}')
     print("***************************************************************")
