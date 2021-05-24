@@ -1,7 +1,6 @@
 import sys
 import os
 from pathlib import Path
-import time
 import subprocess
 
 Python_Installer_version = "0.0.1"
@@ -104,7 +103,7 @@ def clean_path_env():
                     new_env.append(env)
 
             new_env = set(new_env)
-            new_env = f"'{';'.join(new_env)}'"
+            new_env = ';'.join(new_env)
 
             if profile == '"Machine"':
                 print()
@@ -118,10 +117,10 @@ def clean_path_env():
                                  r'\bin;C:\Program64' \
                                  r'\Python\Python\Library\mingw-w64\bin;' + new_env
                 powershell(
-                    f'[System.Environment]::SetEnvironmentVariable("Path", {new_env_python},[System.EnvironmentVariableTarget]::{profile})')
+                    f'[System.Environment]::SetEnvironmentVariable("Path", "{new_env_python}",[System.EnvironmentVariableTarget]::{profile})')
             else:
                 powershell(
-                    f'[System.Environment]::SetEnvironmentVariable("Path", {new_env},[System.EnvironmentVariableTarget]::{profile})')
+                    f'[System.Environment]::SetEnvironmentVariable("Path", "{new_env}",[System.EnvironmentVariableTarget]::{profile})')
 
 
 def clean_path_ext():
@@ -157,7 +156,7 @@ def clean_path_ext():
                     new_env.append(env)
 
             new_env = set(new_env)
-            new_env = f"'{';'.join(new_env)}'"
+            new_env = ';'.join(new_env)
 
             if profile == '"Machine"':
                 print()
@@ -167,62 +166,62 @@ def clean_path_ext():
                 print("***************************************************************")
                 new_env_python = new_env + ';.PY'
                 powershell(
-                    f'[System.Environment]::SetEnvironmentVariable("PathEXT", {new_env_python},[System.EnvironmentVariableTarget]::{profile})')
+                    f'[System.Environment]::SetEnvironmentVariable("PathEXT", "{new_env_python}",[System.EnvironmentVariableTarget]::{profile})')
             else:
                 powershell(
-                    f'[System.Environment]::SetEnvironmentVariable("PathEXT", {new_env},[System.EnvironmentVariableTarget]::{profile})')
+                    f'[System.Environment]::SetEnvironmentVariable("PathEXT", "{new_env}",[System.EnvironmentVariableTarget]::{profile})')
 
 
-def add_env():
-    print()
-    print("***************************************************************")
-    print('Status: adding the new environment variables')
-    print("***************************************************************")
-    # add Python variables to PATH
-    old_env = powershell(
-        f'[Environment]::GetEnvironmentVariable("PATH", "Machine")'
-    )
-
-    old_env = old_env.stdout.decode("utf-8")
-
-    if len(old_env) > 0:
-        print()
-        old_env = old_env.replace("\n", "")
-        old_env = old_env.replace("\r", "")
-        old_env = old_env.replace(";;", ";")
-        old_env = old_env.replace(";;;", ";")
-
-        if old_env[-1] == ";":
-            old_env = old_env[:-1]
-
-    old_env = r'C:\Program64\Python\Python;C:\Program64\Python\Python\Scripts;C:\Program64\Python\Python\Library\bin' \
-              r';C:\Program64\Python\Python\Library\usr;C:\Program64\Python\Python\Library\Poppler\bin;C:\Program64' \
-              r'\Python\Python\Library\mingw-w64\bin;' + old_env
-
-    powershell(
-        f'[System.Environment]::SetEnvironmentVariable("PATH", "{old_env}",[System.EnvironmentVariableTarget]::"Machine")'
-    )
-
-    # add .PY to PATHEXT
-    old_env = powershell(
-        f'[Environment]::GetEnvironmentVariable("PATHEXT", "Machine")'
-    )
-
-    old_env = old_env.stdout.decode("utf-8")
-
-    if len(old_env) > 0:
-        print()
-        old_env = old_env.replace("\n", "")
-        old_env = old_env.replace("\r", "")
-        old_env = old_env.replace(";;", ";")
-        old_env = old_env.replace(";;;", ";")
-
-        if old_env[-1] == ";":
-            old_env = old_env[:-1]
-    old_env += ';.PY'
-    powershell(
-        f'[System.Environment]::SetEnvironmentVariable("PATHEXT", "{old_env}",[System.EnvironmentVariableTarget]::"Machine")'
-    )
+# def add_env():
+#     print()
+#     print("***************************************************************")
+#     print('Status: adding the new environment variables')
+#     print("***************************************************************")
+#     # add Python variables to PATH
+#     old_env = powershell(
+#         f'[Environment]::GetEnvironmentVariable("PATH", "Machine")'
+#     )
+#
+#     old_env = old_env.stdout.decode("utf-8")
+#
+#     if len(old_env) > 0:
+#         print()
+#         old_env = old_env.replace("\n", "")
+#         old_env = old_env.replace("\r", "")
+#         old_env = old_env.replace(";;", ";")
+#         old_env = old_env.replace(";;;", ";")
+#
+#         if old_env[-1] == ";":
+#             old_env = old_env[:-1]
+#
+#     old_env = r'C:\Program64\Python\Python;C:\Program64\Python\Python\Scripts;C:\Program64\Python\Python\Library\bin' \
+#               r';C:\Program64\Python\Python\Library\usr;C:\Program64\Python\Python\Library\Poppler\bin;C:\Program64' \
+#               r'\Python\Python\Library\mingw-w64\bin;' + old_env
+#
+#     powershell(
+#         f'[System.Environment]::SetEnvironmentVariable("PATH", "{old_env}",[System.EnvironmentVariableTarget]::"Machine")'
+#     )
+#
+#     # add .PY to PATHEXT
+#     old_env = powershell(
+#         f'[Environment]::GetEnvironmentVariable("PATHEXT", "Machine")'
+#     )
+#
+#     old_env = old_env.stdout.decode("utf-8")
+#
+#     if len(old_env) > 0:
+#         print()
+#         old_env = old_env.replace("\n", "")
+#         old_env = old_env.replace("\r", "")
+#         old_env = old_env.replace(";;", ";")
+#         old_env = old_env.replace(";;;", ";")
+#
+#         if old_env[-1] == ";":
+#             old_env = old_env[:-1]
+#     old_env += ';.PY'
+#     powershell(
+#         f'[System.Environment]::SetEnvironmentVariable("PATHEXT", "{old_env}",[System.EnvironmentVariableTarget]::"Machine")'
+#     )
 
 
 def version_changer(ver):
@@ -264,9 +263,8 @@ def version_changer(ver):
             "*****************************************************************************")
         print()
         print('Do you want to reset the environment variables? (Yes/No):')
-        print('Admin ')
-        x = input(
-            'Do you want to reset the environment variables? (Yes/No): ').lower()
+        print('Note: You need to run Python Installer as administrator! ')
+        x = input('Answer: ').lower()
         if x.startswith("y"):
             clean_all_env()
             clean_path_env()
