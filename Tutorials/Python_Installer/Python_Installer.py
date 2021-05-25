@@ -255,33 +255,54 @@ def version_changer(ver):
         pass
 
     python_check = Path(fr'C:\Program64\Python\Python\python{ver}.dll')
+    print()
+    print("***************************************************************")
+    print(f"Status: resetting environment variables")
+    print("***************************************************************")
+    print()
+    clean_all_env()
+    clean_path_env()
+    clean_path_ext()
+    # print()
+    # print("***************************************************************")
+    # print('Environment variables reset has been completed!')
+    # print("***************************************************************")
+
     if python_check.is_file():
-        print(
-            "*****************************************************************************")
-        print('Installation completed successfully!')
-        print(
-            "*****************************************************************************")
         print()
-        print('Do you want to reset the environment variables? (Yes/No):')
-        print('Note: You need to run Python Installer as administrator! ')
-        x = input('Answer: ').lower()
-        if x.startswith("y"):
-            clean_all_env()
-            clean_path_env()
-            clean_path_ext()
-            # add_env()
-            print()
-            print("***************************************************************")
-            print('Environment variables reset completed!')
-        print("***************************************************************")
+        print(
+            "***************************************************************")
+        print('Installation has been completed successfully!')
+        print(
+            "***************************************************************")
+        print()
+        # if current_version == "not found":
+        #     clean_all_env()
+        #     clean_path_env()
+        #     clean_path_ext()
+        # else:
+        #     print('Do you want to reset the environment variables? (Yes/No):')
+        #     x = input('Answer: ').lower()
+        #     if x.startswith("y"):
+        #         clean_all_env()
+        #         clean_path_env()
+        #         clean_path_ext()
+        #         # add_env()
+        #         print()
+        #         print("***************************************************************")
+        #         print('Environment variables reset has been completed!')
+        # print()
+        # print("***************************************************************")
+        # print('Environment variables reset has been completed!')
+        # print("***************************************************************")
     else:
-        print("*********************************************************************************************")
-        print('Installation failed... please close all running process and try again.')
-        print("*********************************************************************************************")
+        print("***************************************************************")
+        print('Installation failed... close all running process and try again.')
+        print("***************************************************************")
 
 
 def ask_version(par=None):
-    global action
+    global action, current_version
     src = r'C:\Program64\Python\DONT_DELETE'
     if not os.path.isdir(src):
         print()
@@ -329,9 +350,9 @@ def ask_version(par=None):
             clean_path_ext()
             # add_env()
             print()
-            print('****************************************')
-            print('Environment variables reset completed!')
-            print('****************************************')
+            print('************************************************')
+            print('Environment variables reset has been completed!')
+            print('************************************************')
 
         else:
             print('Invalid version!')
