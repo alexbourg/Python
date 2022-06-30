@@ -1,0 +1,66 @@
+{
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": false,
+    "python.linting.mypyEnabled": false,
+    "python.globalModuleInstallation": true,
+    "terminal.integrated.profiles.windows": {
+        "CMD": {
+          "path": "C:\\Windows\\System32\\cmd.exe",
+          "args": []
+        }
+      },
+      "terminal.integrated.defaultProfile.windows": "CMD",
+    "editor.rulers": [
+        88,
+        120
+    ],
+    "telemetry.telemetryLevel": "off",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.minimap.enabled": false,
+    "editor.mouseWheelZoom": true,
+    "editor.wordWrap": "on",
+    "powershell.promptToUpdatePackageManagement": false,
+    "powershell.promptToUpdatePowerShell": false,
+    "python.defaultInterpreterPath": "C:\\Program64\\Python\\Python\\python.exe",
+    "python.venvPath": "C:\\Program64\\Python\\venv",
+
+    "python.formatting.autopep8Args": ["--max-line-length", "120", "--experimental"],
+    "python.formatting.yapfArgs": ["--style", "{based_on_style: chromium, indent_width: 20}"],
+    "python.formatting.blackArgs": ["--line-length", "100"],
+
+    "python.linting.pylintArgs": ["--reports", "12", "--disable", "I0011"],
+    "python.linting.flake8Args": ["--ignore=E24,W504", "--verbose"],
+    "python.linting.pydocstyleArgs": ["--ignore=D400", "--ignore=D4"],
+
+    "python.sortImports.args": ["-rc", "--atomic"],
+
+    "extensions.ignoreRecommendations": true,
+    // "editor.multiCursorModifier": "alt",
+    // Configure glob patterns for excluding files and folders.
+    "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true
+    },
+    "editor.fontFamily": "Consolas, 'Courier New', monospace",
+    "editor.fontSize": 16,
+    "window.zoomLevel": 0,
+    "editor.suggestSelection": "first",
+    "security.workspace.trust.enabled": false,
+    "workbench.startupEditor": "none",
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "python.linting.pylintEnabled": true,
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+}
